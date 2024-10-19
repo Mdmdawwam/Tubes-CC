@@ -74,7 +74,7 @@ signUp.addEventListener("click", (event) => {
     });
 });
 
-const signIn = document.getElementById("sublog");
+/*const signIn = document.getElementById("login");
 signIn.addEventListener("click", (event) => {
   event.preventDefault();
   const email = document.getElementById("email").value;
@@ -96,4 +96,4 @@ signIn.addEventListener("click", (event) => {
         showMessage("Account does not Exist");
       }
     });
-});
+});*/
