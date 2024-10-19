@@ -25,7 +25,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-function showMassage(message, divId) {
+function showMessage(message, divId) {
   var messageDiv = document.getElementById(divId);
   messageDiv.style.display = "block";
   messageDiv.innerHTML = message;
@@ -54,18 +54,22 @@ signUp.addEventListener("click", (event) => {
         username: username,
         PNumber: PNumber,
       };
-      showMassage("Account Created Successfully", "signUpMessage");
+      showMessage("Account Created Successfully", "signUpMessage");
       const docRef = doc(db, "user", user.uid);
-      setDoc(docRef, userData).then(() => {
-        console.error("Error writing doc", error);
-      });
+      setDoc(docRef, userData)
+        .then(() => {
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          console.error("Error writing doc", error);
+        });
     })
     .catch((error) => {
       const errorCode = error.code;
       if (errorCode == "auth/email-already-in-use") {
-        showMassage("Email Address already Exists!!!", "signUpMessage");
+        showMessage("Email Address already Exists!!!", "signUpMessage");
       } else {
-        showMassage("Unable to create user", "signUpMessage");
+        showMessage("Unable to create user", "signUpMessage");
       }
     });
 });
@@ -77,19 +81,19 @@ signIn.addEventListener("click", (event) => {
   const password = document.getElementById("pass").value;
   const auth = getAuth();
 
-  createUserWithEmailAndPassword(auth, email, password)
+  signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      showMassage("Login Successful", "signInMessage");
+      showMessage("Login Successful", "signInMessage");
       const user = userCredential.user;
       localStorage.setItem("loggedInUserId", user.uid);
-      window.location.href = "index.html";
+      window.location.href = "homepage.html";
     })
     .catch((error) => {
       const errorCode = error.code;
       if (errorCode === "auth/invalid-credential") {
-        showMassage("Incorrect Email or Password", "signInMessage");
+        showMessage("Incorrect Email or Password", "signInMessage");
       } else {
-        showMassage("Account does not Exist");
+        showMessage("Account does not Exist");
       }
     });
 });
